@@ -1,0 +1,54 @@
+
+/* Target all scrollbars */
+::-webkit-scrollbar {
+    width: 4px; /* Set scrollbar width to 2px */
+  }
+  
+  /* Style scrollbar thumb */
+  ::-webkit-scrollbar-thumb {
+    background-color: #007bff; /* Set thumb background to blue */
+    border-radius: 5px; /* Optional: Round the corners */
+  }
+nav div img {
+    width: 20%;
+    margin-top: 0;
+}
+
+nav {
+    display: flex;
+    margin-top: -40px;
+    align-items: center;
+}
+hr{
+    margin-top: -30px;
+}
+nav div .Login{
+    font-size: 15px;
+    padding: 10px;
+    width: 100px;
+    background: transparent;
+    color: #007bff;
+    font-size: 20px;
+    border: 2px solid #007bff;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s ease-in;
+    
+    &:hover{
+        color: white;
+        background-color: #007bff;
+    }
+}
+.Sign-up{
+    margin: 50px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90vw;
+}
+
+.buttons{
+    display: flex;
+    gap: 20px;
+}

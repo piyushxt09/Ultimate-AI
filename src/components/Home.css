@@ -1,0 +1,36 @@
+.home-page {
+    display: flex;
+    width: 100vw;
+    margin-left: -8px;
+    align-items: center;
+    justify-content: center;
+    height: 89.3vh;
+    color: white;
+    gap: 100px;
+    background-color: black;
+}
+.home-page div h1{
+    font-size: 80px;
+}
+.home-page div h3{
+    font-size: 35px;
+    margin-top: -30px;
+}
+.home-page div p{
+    font-size: 20px;
+    margin-top: -20px;
+}
+.home-page div img{
+    width: 100%;
+}
+.home-page div button{
+    font-size: 18px;
+    padding: 14px 40px;
+    border: 2px solid #007bff;
+    transition: 0.3s ease-in;
+
+    &:hover{
+        background-color: black;
+        color: #007bff; ;
+    }
+}

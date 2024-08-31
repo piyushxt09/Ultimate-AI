@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=SUSE:wght@100..800&display=swap');
+
+body {
+    font-family: "SUSE", sans-serif;
+}
+
+.DashboardMain {
+    height: 80vh;
+    overflow-y: auto;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 80vw;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.interaction {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.Question,
+.Answer {
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+.Question {
+    background-color: #f0f0f0;
+    margin-bottom: 10px;
+}
+
+.Answer {
+    background-color: #000000;
+    color: white;
+}
+.Answer button{
+    position: relative;
+    right: -1020px;
+    background-color: white;
+    color: black;
+    transition: 0.2s;
+    &:hover{
+        color: white;
+    }
+}
+
+/* Input and Button Styling */
+.Div input[type="text"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 18px;
+    outline: 2px solid #007bff;
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+    margin-right: 10px;
+
+    &:focus{
+        outline: 2px solid #000000;
+        border: none;
+    }
+    &:focus::placeholder{
+        color: #000000;
+        
+    }
+    &::placeholder{
+        color: #007bff;
+    }
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer
+}
+.SendBtn {
+    padding: 10px 30px;
+    border: none;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #007bff;
+    border:  2px solid #007bff;
+    transition: 0.4s;
+    color: white;
+    cursor: pointer;
+    &:hover{
+          background-color: transparent;
+          color: #007bff;
+    }
+}
+
+.Div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    .Question,
+    .Answer {
+        width: 100%;
+    }
+
+    .interaction {
+        margin-bottom: 15px;
+    }
+
+    input[type="text"] {
+        width: 70%;
+    }
+}
