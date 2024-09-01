@@ -1,6 +1,6 @@
 import React from 'react'
 import {SignIn } from "@clerk/clerk-react";
-import '../components/navbar.css'
+import './Signup.css';
 
 const Login = () => {
     return (

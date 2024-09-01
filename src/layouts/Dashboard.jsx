@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from 'react-markdown';
 import { HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
@@ -24,9 +24,18 @@ const Dashboard = () => {
         return savedInteractions ? JSON.parse(savedInteractions) : [];
     });
 
+    const lastInteractionRef = useRef(null); // Ref for the last interaction
+
     // Save interactions to localStorage whenever it changes
     useEffect(() => {
         localStorage.setItem('interactions', JSON.stringify(interactions));
+    }, [interactions]);
+
+    // Scroll to the last interaction when interactions update
+    useEffect(() => {
+        if (lastInteractionRef.current) {
+            lastInteractionRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
     }, [interactions]);
 
     // Safety settings for the API
@@ -97,7 +106,11 @@ const Dashboard = () => {
                 {interactions && interactions.length > 0 ? (
                     <div className='main'>
                         {interactions.map((interaction, index) => (
-                            <div key={interaction.id} className={`interaction ${index % 2 === 0 ? 'right' : 'left'}`}>
+                            <div 
+                                key={interaction.id} 
+                                className={`interaction ${index % 2 === 0 ? 'right' : 'left'}`}
+                                ref={index === interactions.length - 1 ? lastInteractionRef : null}
+                            >
                                 {/* Question */}
                                 <div className='Question'>
                                     <ReactMarkdown>{interaction.question}</ReactMarkdown>

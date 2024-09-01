@@ -1,5 +1,6 @@
 import React from 'react'
 import { SignUp } from "@clerk/clerk-react";
+import './Signup.css';
 
 const Signup = () => {
   return (

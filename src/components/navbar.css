@@ -1,54 +1,91 @@
-
-/* Target all scrollbars */
+/* Global scrollbar styles */
 ::-webkit-scrollbar {
-    width: 4px; /* Set scrollbar width to 2px */
-  }
-  
-  /* Style scrollbar thumb */
-  ::-webkit-scrollbar-thumb {
-    background-color: #007bff; /* Set thumb background to blue */
-    border-radius: 5px; /* Optional: Round the corners */
-  }
-nav div img {
-    width: 20%;
-    margin-top: 0;
+    width: 4px;
 }
 
+::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+/* Navbar styles */
 nav {
     display: flex;
-    margin-top: -40px;
+    justify-content: space-between;
     align-items: center;
-}
-hr{
-    margin-top: -30px;
-}
-nav div .Login{
-    font-size: 15px;
-    padding: 10px;
-    width: 100px;
-    background: transparent;
-    color: #007bff;
-    font-size: 20px;
-    border: 2px solid #007bff;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    transition: 0.4s ease-in;
-    
-    &:hover{
-        color: white;
-        background-color: #007bff;
-    }
-}
-.Sign-up{
-    margin: 50px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90vw;
+    padding: 10px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 100vw; /* Ensure the navbar spans the full viewport width */
+    box-sizing: border-box;
+    background-color: white; /* Optional: Set a background color */
 }
 
-.buttons{
+.logo-container img {
+    width: 200px;
+    height: auto;
+}
+
+.buttons {
     display: flex;
     gap: 20px;
+}
+
+.Login {
+    font-size: 14px;
+    padding: 8px 16px;
+    background: transparent;
+    color: #007bff;
+    border: 2px solid #007bff;
+    transition: 0.4s ease-in;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.Login:hover {
+    color: white;
+    background-color: #007bff;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    nav {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .logo-container {
+        flex: 1;
+    }
+
+    .buttons {
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    .buttons a {
+        width: auto;
+    }
+
+    .Login {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .logo-container img {
+        width: 150px;
+    }
+
+    .Login {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    .buttons {
+        gap: 10px;
+    }
+    nav {
+        width: 104vw;
+    }
 }

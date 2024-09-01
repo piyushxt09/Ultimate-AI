@@ -16,13 +16,13 @@ const Home = () => {
         }
     }, [userId, isLoaded, navigate]);
 
-    return (
+    return (<>
         <div className='home-page'>
             <div>
                 <h1>Ultimate AI</h1>
                 <h3>Supercharge your creativity and productivity</h3>
                 <p>Experience seamless conversation with our AI chat app. Connect <br /> effortlessly, get instant responses.</p>
-                <Link to='/login'>
+                <Link to='/sign-up' style={{textDecoration: 'none'}}>
                     <button>Get Started</button>
                 </Link>
             </div>
@@ -30,6 +30,10 @@ const Home = () => {
                 <img src="coder.png" alt="Coder" />
             </div>
         </div>
+        <div className="footer">
+        <p>&copy; 2024 piyush_xt09__ <br /> All rights reserved.</p>
+        </div>
+    </>
     );
 };
 

@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './navbar.css'
-import { SignInButton, SignedIn, SignedOut, UserButton, useAuth } from '@clerk/clerk-react'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './navbar.css';
+import { SignInButton, SignedIn, SignedOut, UserButton, useAuth } from '@clerk/clerk-react';
 
 const Navbar = () => {
     const { userId, isLoaded } = useAuth();
@@ -16,27 +16,26 @@ const Navbar = () => {
                     {!userId ? (
                         <>
                             <Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>
-                                <button className='Login'>Log In</button>
+                                <button className='Login' style={{fontSize: '16px'}}>Log In</button>
                             </Link>
                             <Link to='/sign-up' style={{ textDecoration: 'none', color: 'black' }}>
-                                <button className='Login'>Sign up</button>
+                                <button className='Login' style={{fontSize: '16px'}}>Sign up</button>
                             </Link>
                         </>
                     ) : (
-                        <header >
-                            <SignedOut style={{fontSize: '40px'}}>
+                        <header>
+                            <SignedOut>
                                 <SignInButton />
                             </SignedOut>
-                            <SignedIn style={{fontSize: '40px'}}>
+                            <SignedIn>
                                 <UserButton/>
                             </SignedIn>
                         </header>
                     )}
                 </div>
             </nav>
-            <hr />
         </div>
-    )
+    );
 }
 
 export default Navbar;
