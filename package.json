@@ -1,9 +1,12 @@
 {
+  "home": "https://piyushxt09/github.io/Ultimate-AI",
   "name": "free-apis",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy" : "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -13,6 +16,8 @@
     "@clerk/clerk-react": "^5.5.0",
     "@google/generative-ai": "^0.17.1",
     "dotenv": "^16.4.5",
+    "gh-pages": "^6.1.1",
+    "install": "^0.13.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
