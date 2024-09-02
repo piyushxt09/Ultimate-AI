@@ -3,12 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+ "scripts": {
+  "vercel-build": "npm run build"
+},
   "dependencies": {
     "@clerk/clerk-react": "^5.5.0",
     "@google/generative-ai": "^0.17.1",
