@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import ReactMarkdown from 'react-markdown';
-import { HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 import { useAuth } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
@@ -10,6 +8,7 @@ const Dashboard = () => {
     const { userId, isLoaded } = useAuth();
     const navigate = useNavigate();
 
+    // Redirect user if not logged in
     useEffect(() => {
         if (isLoaded && !userId) {
             navigate('/sign-up');
@@ -18,51 +17,51 @@ const Dashboard = () => {
         }
     }, [isLoaded, userId, navigate]);
 
-    // useState hook for interactions
+    // Load & store interactions in localStorage
     const [interactions, setInteractions] = useState(() => {
         const savedInteractions = localStorage.getItem('interactions');
         return savedInteractions ? JSON.parse(savedInteractions) : [];
     });
 
-    const lastInteractionRef = useRef(null); // Ref for the last interaction
+    const lastInteractionRef = useRef(null);
 
-    // Save interactions to localStorage whenever it changes
     useEffect(() => {
         localStorage.setItem('interactions', JSON.stringify(interactions));
     }, [interactions]);
 
-    // Scroll to the last interaction when interactions update
+    // Scroll to last message
     useEffect(() => {
         if (lastInteractionRef.current) {
             lastInteractionRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [interactions]);
 
-    // Safety settings for the API
-    const safetySettings = [
-        {
-            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-            threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-        },
-        {
-            category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-            threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-        },
-    ];
-
-    // Function to fetch data from the GoogleGenerativeAI API
+    // ⭐ REPLACED WITH OPENROUTER REQUEST
     const fetchData = async (text, interactionId) => {
         try {
-            const API_KEY = import.meta.env.VITE_GEMINI_PUBLIC_KEY;
-            const genAI = new GoogleGenerativeAI(API_KEY);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", safetySettings });
-            const result = await model.generateContent(text);
-            const answer = result.response.text();
+            const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
-            // Update the interaction with the answer
-            setInteractions((prev) => 
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    model: "google/gemini-3-pro-preview",
+                    messages: [
+                        { role: "user", content: text }
+                    ]
+                })
+            });
+
+            const data = await response.json();
+            const answer = data?.choices?.[0]?.message?.content || "No response";
+
+            // Update UI
+            setInteractions(prev =>
                 prev.map(interaction =>
-                    interaction.id === interactionId 
+                    interaction.id === interactionId
                         ? { ...interaction, answer }
                         : interaction
                 )
@@ -72,42 +71,34 @@ const Dashboard = () => {
         }
     };
 
-    // Handle form submission
+    // Handle send message
     const handleSubmit = (e) => {
         e.preventDefault();
         const question = document.getElementById('Question').value;
         if (question) {
             const newInteraction = { id: Date.now(), question, answer: 'loading...' };
             setInteractions((prev) => [...prev, newInteraction]);
-
-            // Clear the input field after submission
             document.getElementById('Question').value = '';
-
-            // Fetch answer from the API
             fetchData(question, newInteraction.id);
         }
     };
 
-    // Copy content to clipboard
+    // Copy answer without Markdown
     const CopyContent = (text) => {
-        const plainText = text.replace(/(\*\*|__|\*|_|\~\~|\`)/g, ''); // Removing markdown symbols
+        const plainText = text.replace(/(\*\*|__|\*|_|\~\~|\`)/g, '');
         navigator.clipboard.writeText(plainText)
-            .then(() => {
-                alert('Copied successfull');
-            })
-            .catch(err => {
-                console.error('Failed to copy: ', err);
-            });
+            .then(() => alert('Copied successfully'))
+            .catch(err => console.error('Failed to copy:', err));
     };
 
     return (
         <div className='Dashboard'>
             <div className="DashboardMain">
-                {interactions && interactions.length > 0 ? (
+                {interactions.length > 0 ? (
                     <div className='main'>
                         {interactions.map((interaction, index) => (
-                            <div 
-                                key={interaction.id} 
+                            <div
+                                key={interaction.id}
                                 className={`interaction ${index % 2 === 0 ? 'right' : 'left'}`}
                                 ref={index === interactions.length - 1 ? lastInteractionRef : null}
                             >
@@ -115,6 +106,7 @@ const Dashboard = () => {
                                 <div className='Question'>
                                     <ReactMarkdown>{interaction.question}</ReactMarkdown>
                                 </div>
+
                                 {/* Answer */}
                                 <div className='Answer'>
                                     <ReactMarkdown>{interaction.answer}</ReactMarkdown>
@@ -127,6 +119,8 @@ const Dashboard = () => {
                     <p className='empty' style={{ textAlign: 'center' }}>Nothing is there!</p>
                 )}
             </div>
+
+            {/* Input */}
             <div className='Div'>
                 <input type="text" placeholder='Write Something...' id='Question' />
                 <button onClick={handleSubmit} className='SendBtn'>Send</button>
